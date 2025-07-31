@@ -7,33 +7,58 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Calculator</h2>
-    <p class="display">631</p>
-    <p>
-        <button class="line1">1</button>
-        <button class="line1">2</button>
-        <button class="line1">3</button>
-    </p>
-    <p>
-        <button class="line2">4</button>
-        <button class="line2">5</button>
-        <button class="line2">6</button>
-    </p>
-    <p>
-        <button class="line3">7</button>
-        <button class="line3">8</button>
-        <button class="line3">9</button>
-    </p>
-    <p>  
-        <button class="line4">+</button>
-        <button class="line4">0</button>
-        <button class="line4">-</button>
-    </p>
-    <p>
-        <button class="line5">*</button>
-        <button class="line5">/</button>
-        <button class="line5">=</button>
-    </p>
+    <div class="calc">
+        <h2>Calculator</h2>
+        <p>
+            <button class="clear">Clear</button>
+        </p>
+        <p id="row1">
+            <button class="line1">
+                <div class="seven">7</div>
+            </button>
+            <button class="line1">
+                <div class="eight">8</div>
+            </button>
+            <button class="line1">
+                <div class="nine">9</div>
+            </button>
+            <button class="line1">
+                <div class="multiply">*</div>
+            </button>
+        </p>
+        <p id="row2">
+            <button class="line2">
+                <div class="four">4</div>
+            </button>
+            <button class="line2">
+                <div class="five">5</div>
+            </button>
+            <button class="line2">
+                <div class="six">6</div>
+            </button>
+            <button class="line2">-</button>
+        </p>
+        <p id="row3">
+            <button class="line3">
+                <div class="one">1</div>
+            </button>
+            <button class="line3">
+                <div class="two">2</div>
+            </button>
+            <button class="line3">
+                <div class="three">3</div>
+            </button>
+            <button class="line3">+</button>
+        </p>
+        <p id="row4">  
+            <button class="line4">
+                <div class="zero">0</div>
+            </button>
+            <button class="line4">.</button>
+            <button class="line4">=</button>
+            <button class="line4">/</button>
+        </p>
+    </div>    
     <script src = 'script.js'></script>
 </body>
 </html>
