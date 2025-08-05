@@ -17,10 +17,7 @@ body{
 }
 
 .clear{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 6px;
+    text-align: center;
     width: 172px;
     height: 40px;
 }
@@ -37,6 +34,7 @@ body{
 
 .display{
     background-color: white;
+    padding-right: 5px;
     margin: 0 auto;
     width: 172px;
     height: 40px;

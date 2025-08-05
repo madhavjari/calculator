@@ -1,21 +1,50 @@
-function add(a,b){
-    return a + b;
+function add(firstNumber,secondNumber,strNumber,parseNumber){
+    firstNumber = parseFloat(firstNumber);
+    secondNumber = parseFloat(secondNumber);
+    display.textContent = firstNumber + secondNumber;
+    firstNumber = firstNumber + secondNumber;
+    secondNumber = undefined;
+    strNumber = '';
+    parseNumber = 0;
+    return [firstNumber,secondNumber,strNumber,parseNumber];
 }
 
-function subtract(a,b){
-    return a - b;
+function subtract(firstNumber,secondNumber,strNumber,parseNumber){
+    firstNumber = parseFloat(firstNumber);
+    secondNumber = parseFloat(secondNumber);
+    display.textContent = firstNumber - secondNumber;
+    firstNumber = firstNumber - secondNumber;
+    secondNumber = undefined;
+    strNumber = '';
+    parseNumber = 0;
+    return [firstNumber,secondNumber,strNumber,parseNumber];
 }
 
-function multiply(a,b){
-    return a * b;
+function multiply(firstNumber,secondNumber,strNumber,parseNumber){
+    firstNumber = parseFloat(firstNumber);
+    secondNumber = parseFloat(secondNumber);
+    display.textContent = firstNumber*secondNumber;
+    firstNumber = firstNumber*secondNumber;
+    secondNumber = undefined;
+    strNumber = '';
+    parseNumber = 0;
+    return [firstNumber,secondNumber,strNumber,parseNumber];
 }
 
-function division(a,b){
-    if(b === 0){
-        return 'Remember infinity sign from FIOS?'
+function division(firstNumber,secondNumber,strNumber,parseNumber){
+    if(secondNumber === 0){
+        display.textContent = firstNumber*secondNumber;
+        return [firstNumber,secondNumber,strNumber,parseNumber];
     }
     else{
-        return (a/b).toFixed(3);
+        firstNumber = parseFloat(firstNumber);
+        secondNumber = parseFloat(secondNumber);
+        display.textContent = firstNumber/secondNumber;
+        firstNumber = firstNumber/secondNumber;
+        secondNumber = undefined;
+        strNumber = '';
+        parseNumber = 0;
+        return [firstNumber,secondNumber,strNumber,parseNumber];
     }
 }
 
@@ -29,8 +58,9 @@ function floatInput(str){
 
 let strNumber = '';
 let parseNumber = 0;
-let firstNumber = '';
-let secondNumber = '';
+let firstNumber;
+let secondNumber;
+let prevOperator;
 let calc = document.querySelector('.calc');
 let dis = document.createElement('div');
 dis.classList.add('display');
@@ -40,8 +70,8 @@ let display = document.querySelector('.display');
 
 function createNumber(strNumber,num){
     strNumber = strNumber+num;
+    display.textContent = strNumber;
     parseNumber = parseFloat(strNumber);
-    display.textContent = parseNumber;
     return strNumber;
 }
 
@@ -75,27 +105,69 @@ nine.addEventListener('click',() => strNumber = createNumber(strNumber,'9'));
 let zero = document.querySelector('.zero');
 zero.addEventListener('click',() => strNumber = createNumber(strNumber,'0'));
 
+let dot = document.querySelector('.dot');
+dot.addEventListener('click', () => strNumber = createNumber(strNumber,'.'))
+
+
 let clear = document.querySelector('.clear');
 clear.addEventListener('click', () =>{
     strNumber = '';
+    firstNumber = undefined;
+    secondNumber = undefined;
+    prevOperator = undefined;
     number = 0;
     display.textContent = number;
 })
-let operator;
 
 let multiple = document.querySelector('.multiply');
-multiple.addEventListener('click',() =>{
-    if(firstNumber== ''){
+multiple.addEventListener('click',() => [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'*'));
+
+let divide = document.querySelector('.divide');
+divide.addEventListener('click',() => [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'/'));
+
+let adding = document.querySelector('.add');
+adding.addEventListener('click',() => [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'+'));
+
+let subtraction = document.querySelector('.subtract');
+subtraction.addEventListener('click',() => [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'-'));
+
+let equal = document.querySelector('.equal');
+equal.addEventListener('click',() => [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'='));
+
+function operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,operator){
+    if(!firstNumber){
         firstNumber = parseNumber;
-        operator = '*';
-        display.textContent = parseNumber+ ' ' + operator;
         strNumber = '';
         parseNumber = 0;
+        prevOperator = operator;
     }
-    else{
+    else if(!secondNumber){
         secondNumber = parseNumber;
-    }
-})
+        strNumber = '';
+        parseNumber = 0;
+        if(prevOperator === '+' && operator != undefined) {
+            [firstNumber,secondNumber,strNumber,parseNumber] = add(firstNumber,secondNumber,strNumber,parseNumber);
+        }
+        else if(prevOperator === '-' && operator != undefined) {
+            [firstNumber,secondNumber,strNumber,parseNumber] = subtract(firstNumber,secondNumber,strNumber,parseNumber);
+        }
+        
+        else if(prevOperator === '*' && operator != undefined){ 
+            [firstNumber,secondNumber,strNumber,parseNumber] = multiply(firstNumber,secondNumber,strNumber,parseNumber);
+        }
+        else if(prevOperator === '/' && operator != undefined) {
+            [firstNumber,secondNumber,strNumber,parseNumber] = division(firstNumber,secondNumber,strNumber,parseNumber);
+        }
+        else{
+            prevOperator = undefined;
+        }
+        prevOperator = operator;
+    }   
+    console.log("first= ", firstNumber);
+    console.log("second = ",secondNumber);
+    console.log(prevOperator);
+    return [strNumber,firstNumber,parseNumber,secondNumber,prevOperator];
+}
 
 const operators = ['+' ,'-', '*', '/'];
 
