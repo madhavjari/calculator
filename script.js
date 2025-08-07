@@ -1,50 +1,43 @@
-function add(firstNumber,secondNumber,strNumber,parseNumber){
-    firstNumber = parseFloat(firstNumber);
+function add(firstNumber,secondNumber){
+    //input numbers in float 
+    firstNumber = parseFloat(firstNumber); 
     secondNumber = parseFloat(secondNumber);
-    display.textContent = firstNumber + secondNumber;
-    firstNumber = firstNumber + secondNumber;
-    secondNumber = undefined;
-    strNumber = '';
-    parseNumber = 0;
-    return [firstNumber,secondNumber,strNumber,parseNumber];
+    display.textContent = firstNumber + secondNumber; //displaying addition
+    firstNumber = firstNumber + secondNumber; //converting result into first number
+    return [firstNumber,secondNumber];
 }
 
-function subtract(firstNumber,secondNumber,strNumber,parseNumber){
+function subtract(firstNumber,secondNumber){
+    //input numbers in float
     firstNumber = parseFloat(firstNumber);
     secondNumber = parseFloat(secondNumber);
-    display.textContent = firstNumber - secondNumber;
-    firstNumber = firstNumber - secondNumber;
-    secondNumber = undefined;
-    strNumber = '';
-    parseNumber = 0;
-    return [firstNumber,secondNumber,strNumber,parseNumber];
+    display.textContent = firstNumber - secondNumber; //displaying subtraction
+    firstNumber = firstNumber - secondNumber; // converting result into first number
+    return [firstNumber,secondNumber];
 }
 
-function multiply(firstNumber,secondNumber,strNumber,parseNumber){
+function multiply(firstNumber,secondNumber){
+    //input numbers in float
     firstNumber = parseFloat(firstNumber);
     secondNumber = parseFloat(secondNumber);
-    display.textContent = firstNumber*secondNumber;
-    firstNumber = firstNumber*secondNumber;
-    secondNumber = undefined;
-    strNumber = '';
-    parseNumber = 0;
-    return [firstNumber,secondNumber,strNumber,parseNumber];
+    display.textContent = firstNumber*secondNumber; //displaying multiplication
+    firstNumber = firstNumber*secondNumber; // converting result into first number
+    return [firstNumber,secondNumber];
 }
 
-function division(firstNumber,secondNumber,strNumber,parseNumber){
+function division(firstNumber,secondNumber){
+    //division by 0 is infinite
     if(secondNumber === 0){
-        display.textContent = firstNumber*secondNumber;
-        return [firstNumber,secondNumber,strNumber,parseNumber];
+        display.textContent = 'infinite';
+        return [firstNumber,secondNumber];
     }
     else{
+        //input numbers in float
         firstNumber = parseFloat(firstNumber);
         secondNumber = parseFloat(secondNumber);
-        display.textContent = firstNumber/secondNumber;
-        firstNumber = firstNumber/secondNumber;
-        secondNumber = undefined;
-        strNumber = '';
-        parseNumber = 0;
-        return [firstNumber,secondNumber,strNumber,parseNumber];
+        display.textContent = firstNumber/secondNumber; //displaying division
+        firstNumber = firstNumber/secondNumber; //converting result into first number
+        return [firstNumber,secondNumber];
     }
 }
 
@@ -56,18 +49,21 @@ function floatInput(str){
     }while (true);
 }
 
-let strNumber = '';
-let parseNumber = 0;
-let firstNumber;
+let strNumber = ''; //clicked input
+let parseNumber = 0; //variable for converting input to float
+let firstNumber; 
 let secondNumber;
-let prevOperator;
-let calc = document.querySelector('.calc');
-let dis = document.createElement('div');
+let prevOperator; 
+let calc = document.querySelector('.calc'); //main class of html
+
+//creating element to display the output of buttons clicked
+let dis = document.createElement('div'); 
 dis.classList.add('display');
 dis.textContent = parseNumber;
-calc.insertBefore(dis,calc.children[1]);
+calc.insertBefore(dis,calc.children[1]); //adjusting display just above buttons
 let display = document.querySelector('.display');
 
+//taking inputs of number
 function createNumber(strNumber,num){
     strNumber = strNumber+num;
     display.textContent = strNumber;
@@ -75,6 +71,7 @@ function createNumber(strNumber,num){
     return strNumber;
 }
 
+//clicking 0-9 and dot and taking input
 let one = document.querySelector('.one');
 one.addEventListener('click',() => strNumber = createNumber(strNumber,'1'));
 
@@ -106,12 +103,13 @@ let zero = document.querySelector('.zero');
 zero.addEventListener('click',() => strNumber = createNumber(strNumber,'0'));
 
 let dot = document.querySelector('.dot');
-dot.addEventListener('click', () => strNumber = createNumber(strNumber,'.'))
+dot.addEventListener('click', () => strNumber = createNumber(strNumber,'.'));
 
-
+//clear the display when clicked
 let clear = document.querySelector('.clear');
 clear.addEventListener('click', () =>{
     strNumber = '';
+    str = '';
     firstNumber = undefined;
     secondNumber = undefined;
     prevOperator = undefined;
@@ -119,8 +117,9 @@ clear.addEventListener('click', () =>{
     display.textContent = number;
 })
 
+//operators when clicked
 let multiple = document.querySelector('.multiply');
-multiple.addEventListener('click',() => [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'*'));
+multiple.addEventListener('click',() =>  [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'*'));
 
 let divide = document.querySelector('.divide');
 divide.addEventListener('click',() => [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'/'));
@@ -134,38 +133,74 @@ subtraction.addEventListener('click',() => [strNumber,firstNumber,parseNumber,se
 let equal = document.querySelector('.equal');
 equal.addEventListener('click',() => [strNumber,firstNumber,parseNumber,secondNumber,prevOperator] = operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,'='));
 
+//main oepration
+
 function operation(strNumber,firstNumber,parseNumber,secondNumber,prevOperator,operator){
+    //if first number does not exist, the parse number becomes first number
     if(!firstNumber){
         firstNumber = parseNumber;
         strNumber = '';
         parseNumber = 0;
         prevOperator = operator;
     }
-    else if(!secondNumber){
-        secondNumber = parseNumber;
-        strNumber = '';
-        parseNumber = 0;
-        if(prevOperator === '+' && operator != undefined) {
-            [firstNumber,secondNumber,strNumber,parseNumber] = add(firstNumber,secondNumber,strNumber,parseNumber);
+    else{
+        //if second number does not exist, the parse number becomes second number
+        if(!secondNumber){
+            secondNumber = parseNumber;
+        }
+        console.log("second = ",secondNumber);
+        console.log("prev = ",prevOperator);
+        if(prevOperator === '+' && operator === '='){
+            [firstNumber,secondNumber] = add(firstNumber,secondNumber);
+        }
+        else if(prevOperator === '+' && operator != undefined) {
+            secondNumber = parseNumber;
+            [firstNumber,secondNumber] = add(firstNumber,secondNumber);
+            secondNumber = undefined;
+            strNumber = '';
+            parseNumber = 0;
+        }
+        else if(prevOperator === '-' && operator === '='){
+            [firstNumber,secondNumber] = subtract(firstNumber,secondNumber);
         }
         else if(prevOperator === '-' && operator != undefined) {
-            [firstNumber,secondNumber,strNumber,parseNumber] = subtract(firstNumber,secondNumber,strNumber,parseNumber);
+            secondNumber = parseNumber;
+            [firstNumber,secondNumber] = subtract(firstNumber,secondNumber);
+            secondNumber = undefined;
+            strNumber = '';
+            parseNumber = 0;
         }
-        
-        else if(prevOperator === '*' && operator != undefined){ 
-            [firstNumber,secondNumber,strNumber,parseNumber] = multiply(firstNumber,secondNumber,strNumber,parseNumber);
+        else if(prevOperator === '*' && operator === '='){
+            [firstNumber,secondNumber] = multiply(firstNumber,secondNumber);
+        }
+        else if(prevOperator === '*' && operator != undefined){
+            console.log("multi= ",parseNumber);
+            secondNumber = parseNumber;
+            [firstNumber,secondNumber] = multiply(firstNumber,secondNumber);
+            secondNumber = undefined;
+            strNumber = '';
+            parseNumber = 0;
+        }
+        else if(prevOperator === '/' && operator === '='){
+            [firstNumber,secondNumber] = division(firstNumber,secondNumber);
         }
         else if(prevOperator === '/' && operator != undefined) {
-            [firstNumber,secondNumber,strNumber,parseNumber] = division(firstNumber,secondNumber,strNumber,parseNumber);
+            secondNumber = parseNumber;
+            [firstNumber,secondNumber] = division(firstNumber,secondNumber);
+            secondNumber = undefined;
+            strNumber = '';
+            parseNumber = 0;
         }
         else{
             prevOperator = undefined;
+            console.log('prev ope in equal');
         }
-        prevOperator = operator;
+        if(operator != '=') prevOperator = operator;
     }   
     console.log("first= ", firstNumber);
-    console.log("second = ",secondNumber);
-    console.log(prevOperator);
+    console.log("second num = ",secondNumber);
+    //console.log("prevopera= ",prevOperator);
+    console.log("operator= ", operator);
     return [strNumber,firstNumber,parseNumber,secondNumber,prevOperator];
 }
 

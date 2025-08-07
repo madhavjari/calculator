@@ -23,11 +23,11 @@ body{
 }
 
 .calc{
-    text-align: center;
+    margin: auto;
     padding-top: 2px;
     padding-bottom: 2px;
-    margin-right: 550px;
-    margin-left: 550px;
+    width: 200px;
+    height: 420px;
     border-radius: 8px;
     background-color: lightgray;
 }
