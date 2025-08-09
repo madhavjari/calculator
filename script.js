@@ -48,9 +48,9 @@ calc.insertBefore(dis,calc.children[1]); //adjusting display just above buttons
 let display = document.querySelector('.display');
 
 //taking inputs of number
-function createNumber(strNumber,num){
-    strNumber = strNumber+num;
-    console.log("str = ", strNumber);
+function createNumber(strNumber,value){
+    if(!strNumber && value === '.') strNumber = 0;
+    strNumber = strNumber+value;
     display.textContent = strNumber;
     return strNumber;
 }
@@ -62,16 +62,12 @@ calc.addEventListener('click',(event) => {
     if(parentButton){
         if (!isNaN(parseFloat(value)) || value === '.') {
             if(justCalculated === true){
-          //  if (strNumber === '') { 
-            //    strNumber = '';  
                 strNumber = '';    
                 firstNumber = undefined; 
                 secondNumber = undefined; 
                 prevOperator = undefined; 
-              //  display.textContent = '0';
                 justCalculated = false;
             }
-            //}
             strNumber = createNumber(strNumber, value);
         }
         else if(operators.includes(value)){
@@ -88,8 +84,8 @@ calc.addEventListener('click',(event) => {
         }
     }
 })
-//main oepration
 
+//main oepration
 function operation(strNumber,firstNumber,secondNumber,prevOperator,operator,justCalculated){
     if (operator !== '=' && strNumber !== ''){
     //if first number does not exist, the parse number becomes first number
@@ -128,10 +124,6 @@ function operation(strNumber,firstNumber,secondNumber,prevOperator,operator,just
         prevOperator = operator;
         justCalculated = false;
     }
-    //console.log("first= ", firstNumber);
-    //console.log("second num = ",secondNumber);
-    //console.log("prevopera= ",prevOperator);
-    //console.log("operator= ", operator);
     return [strNumber,firstNumber,secondNumber,prevOperator,justCalculated];
 }
 
