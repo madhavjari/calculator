@@ -59,6 +59,7 @@ calc.addEventListener('click',(event) => {
     const clickedElement = event.target;
     const value = clickedElement.textContent;
     const parentButton = clickedElement.closest('button');
+    var dot = document.getElementById('dotButton');
     if(parentButton){
         if (!isNaN(parseFloat(value)) || value === '.') {
             if(justCalculated === true){
@@ -69,18 +70,26 @@ calc.addEventListener('click',(event) => {
                 justCalculated = false;
             }
             strNumber = createNumber(strNumber, value);
+            if(value === '.') dot.disabled = true;
         }
         else if(operators.includes(value)){
             justCalculated = false;
             [strNumber,firstNumber,secondNumber,prevOperator,justCalculated] = operation(strNumber,firstNumber,secondNumber,prevOperator,value,justCalculated);
+            if(firstNumber)dot.disabled = false;
         }
         else if(value === 'Clear'){
+            dot.disabled = false;
             strNumber = '';
             firstNumber = undefined;
             secondNumber = undefined;
             prevOperator = undefined;
             display.textContent = 0;
             justCalculated = false;
+        }
+        else if(value === '⌫' && strNumber){
+            strNumber = strNumber.slice(0,-1);
+            if(!strNumber) display.textContent = 0;
+            else display.textContent = strNumber;
         }
     }
 })

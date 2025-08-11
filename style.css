@@ -16,9 +16,17 @@ body{
     height: 40px;
 }
 
-.clear{
+#row0{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.clear, .backSpace{
     text-align: center;
-    width: 172px;
+    border: 1px solid black;
+    width: 80px;
     height: 40px;
 }
 
@@ -29,7 +37,7 @@ body{
     width: 200px;
     height: 420px;
     border-radius: 8px;
-    background-color: lightgray;
+    background-color: pink;
 }
 
 .display{
