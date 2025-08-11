@@ -59,7 +59,7 @@ calc.addEventListener('click',(event) => {
     const clickedElement = event.target;
     const value = clickedElement.textContent;
     const parentButton = clickedElement.closest('button');
-    var dot = document.getElementById('dotButton');
+    var dot = document.querySelector('.dotButton');
     if(parentButton){
         if (!isNaN(parseFloat(value)) || value === '.') {
             if(justCalculated === true){
