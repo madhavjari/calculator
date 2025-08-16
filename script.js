@@ -77,7 +77,7 @@ calc.addEventListener('click',(event) => {
             [strNumber,firstNumber,secondNumber,prevOperator,justCalculated] = operation(strNumber,firstNumber,secondNumber,prevOperator,value,justCalculated);
             if(firstNumber)dot.disabled = false;
         }
-        else if(value === 'Clear'){
+        else if(value === 'CE'){
             dot.disabled = false;
             strNumber = '';
             firstNumber = undefined;
